@@ -128,7 +128,7 @@ x mod N $\rightarrow$ x$^{2}$ mod N $\rightarrow$ (x$^{2}$)$^{^{2}}$ $\cdots$ x$
 each step takes O(log$^{2}N)$ times to compute and \\there are log$_{2}$y steps, $\therefore$ $\in$ O(n$^{3}$),\\ where n is the \# of bits in N
 
 \subsubsection{Formal Limit Proof}
-\begin{flushleft}\vspace{-16pt}\[
+\begin{flushleft}\vspace{-10pt}\[
 \hspace{-50pt}lim_{n \rightarrow \infty}\frac{f(n)}{g(n)}
 \begin{cases}
 \hspace{3pt} \geq \ 0 \ {\it (\infty)} \Rightarrow \ f(n) \ \in \ \Omega(g(n))\\
@@ -214,8 +214,9 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
     1 & \cdots & \cdots & \ddots & \omega^{j(n-1)}\\
     1 & \omega^{n-1} & \omega^{2(n-1)} & \cdots & \omega^{(n-1)(n-1)}\\
 \end{bmatrix}
-{\tiny where \ (j,k)^{th} \ entry \ is \ \omega^{jk}}
+{\it where (j,k)^{th} entry \ is \ \omega^{jk}}
 }\]
+
 
 \subsubsection{Graphs}
 {\scriptsize\hspace{5pt} $\cdot$ \textit{\textbf{graph}} -- set of nodes \& edges between select nodes\\
@@ -230,28 +231,66 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
 \hspace{5pt} $\cdot$ \textit{\textbf{cross edge}}: {\it pre(v) $\textless$ post(v) $\textless$ pre(u) $\textless$ post(u)}\\
 {\it properties:}\\
 \hspace{5pt} $\cdot$ a directed graph has a cycle iff its DFS reveals a back edge\\
+\hspace{5pt} $\cdot$ every DAG has at least 1 source \& 1 sink\\
+\hspace{5pt} $\cdot$ in a DAG, every edge leads to a vertex with lower post \#\\
 \hspace{5pt} $\cdot$ every directed graph is a DAG of its SCCs\\
+\hspace{5pt} $\cdot$ acyclic, linearizability, \& absence of back edges are all the same \\\hspace{12pt}property\\
 \hspace{5pt} $\cdot$ if explore starts at u, it will terminate when all nodes \\\hspace{10pt}reachable from u have been visited\\
 \hspace{5pt} $\cdot$ node receives highest post order in DFS must lie in source SCC\\
 \hspace{5pt} $\cdot$ if C \& C$^{'}$ are SCCs \& $\exists$ an edge from a node in C $\rightarrow$ C$^{'}$ $\Rightarrow$ \\\hspace{12pt}highest post order number in C $\textgreater$ than C$^{'}$'s highest post \#\\
-{\it linearize (topologically sort from earliest $\rightarrow$ latest)}
-}
-
-
+\hspace{5pt} $\cdot$ min edges to make graph strongly connected with n-sinks \& \\\hspace{12pt}m-sources$\rightarrow${\it max(n,m)}\\
+{\it linearize (topologically sort from earliest $\rightarrow$ latest)}\\
+\hspace{5pt} $\cdot$ perform tasks in decreasing order of their post numbers (DFS)\\
+\hspace{5pt} $\cdot$ or find a source, output it, delete it, repeat until empty\\
+{\it Algorithm to Decompose G into SSCs}\\
+{\addtolength{\leftskip}{4mm}
+\texttt{Run DFS on G$^{R}$, then run DFS on G, every node it reaches is in that SCC, pick next vertex to run DFS from in order of decreasing post \#s discovered from DFS ordering on G$^{R}$}\\}}
 
 \subsubsection{Depth First Search}
 {\scriptsize {\it discovers what nodes are reachable from a vertex $\in$ O($\mid$V$\mid$+$\mid$E$\mid$)}}\\
- \texttt{\textbf{explore}(G, v):\\
- \hspace{3pt} v.visit = true\\
- \hspace{3pt} previsit(v)\\
- \hspace{3pt} for each edge (v, u) in E:\\
- \hspace{9pt} if u.visit = false: explore(G, u)\\
- \hspace{3pt} postvisit(v)}\\
+\texttt{\textbf{explore}(G, v):\\
+\hspace{3pt} v.visit = true\\
+\hspace{3pt} previsit(v)\\
+\hspace{3pt} for each edge (v, u) in E:\\
+\hspace{9pt} if u.visit = false: explore(G, u)\\
+\hspace{3pt} postvisit(v)}\\
  
- \texttt{\textbf{dfs}(G):\\
- \hspace{3pt} for all v $\in$ V: v.visit = false\\
-  \hspace{3pt} for all v $\in$ V: if v.visit = false: explore(G,v)}
+\texttt{\textbf{dfs}(G):\\
+\hspace{3pt} for all v $\in$ V: v.visit = false\\
+\hspace{3pt} for all v $\in$ V: if v.visit = false: explore(G,v)}
   
+\subsubsection{Breadth First Search}
+{\scriptsize {\it  $\in$ O($\mid$V$\mid$+$\mid$E$\mid$)\\}}
+\texttt{\textbf{bfs}(G, s):\\
+\hspace{3pt} for all u $\in$ V: dist(u) = $\infty$\\
+\hspace{12pt} dist(s) = 0\\
+\hspace{3pt} Q = [s] (queue containing just {\it s})\\
+\hspace{3pt} while Q is not empty:\\
+\hspace{12pt} u = eject(Q)\\
+\hspace{12pt} for all edges (u,v) $\in$ E:\\
+\hspace{20pt} if dist(v) = $\infty$:\\
+\hspace{27pt} inject(Q,v)\\
+\hspace{27pt} dist(v) = dist(u) + 1}
+
+\subsubsection{Dijkstra's Algorithm}
+{\scriptsize {\it shortest path algorithm $\in$ O(($\mid$V$\mid$+$\mid$E$\mid$)log$\mid$V$\mid$)\\}}
+\texttt{\textbf{dijkstra}(G, l, s):\\
+\hspace{3pt} for all u $\in$ V: \\
+\hspace{10pt} dist(u) = $\infty$\\
+\hspace{10pt} prev(u) = nil\\
+\hspace{3pt} dist(s) = 0\\
+\hspace{3pt} H = makequeue(V) (using dist-values as keys)\\
+\hspace{3pt} while H is not empty:\\
+\hspace{10pt} u = deletemin(H)\\
+\hspace{10pt} for all edges (u,v) $\in$ E:\\
+\hspace{15pt} if dist(v) $\textgreater$ dist(u) + l(u,v):\\
+\hspace{23pt} dist(v) = dist(u) + l(u,v)\\
+\hspace{23pt} prev(v) = u\\
+\hspace{23pt} decreasekey(H,v)}
+\includegraphics[scale=.2]{heaps.png}
+
+
+
 
 % You can even have references
 \rule{0.3\linewidth}{0.25pt}
