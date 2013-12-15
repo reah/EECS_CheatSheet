@@ -92,6 +92,17 @@
 O(n$^{3}$); gcd(x,y) = d = x{\it i} + y{\it b}; x $\geq$ y; \# mod x\\
  \texttt{ext-gcd(x,y):\\ if y == 0: return (x, 1, 0)\\ else:\\ \hspace{3pt} (d, a, b) = ext-gcd(y, x mod y)\\\hspace{3pt} return (d, b, a-$\frac{x}{y}\cdot b$)}
  \includegraphics[scale=.45]{gcd.png}
+ 
+ \subsubsection{Fermat's Little Theorem}
+ if p is prime, then $\forall$ 1 $\leq$ a $\textless$ p\\
+\hspace{5pt} a$^{p-1}$ = 1 mod p \\
+\textit{\textbf{Proof:}}{\it Start by listing first p-1 positive multiples of a:\\
+S = \{a, 2a, 3a, $\cdots$ (p -1)a\}\\
+Suppose that {\it r}a and {\it s}a are the same mod p, $\Rightarrow$ {\it r = s} mod p\\
+$\therefore$ set S of p-1 multiples of a are distinct and nonzero, that is, they must be congruent to 1, 2, 3, $\cdots$ p-1 after being sorted.\\
+Multiply all congruences together and we find
+a$\cdot$2a$\cdot$3a$\cdots$(p-1)$\cdot$a = 1$\cdot$2$\cdot$3$\cdots$(p-1) (mod p)
+or better, a$^{(p-1)}$(p-1)! = (p-1)! mod p. Divide both side by (p-1)! $\blacksquare$}\\
 
 \subsubsection{Modular Exponentiation}
 x$^{y}$ mod N $\rightarrow$ start with repeated squaring mod N\\
