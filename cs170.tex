@@ -3,7 +3,7 @@
 \usepackage{calc}
 \usepackage{ifthen}
 \usepackage[landscape]{geometry}
-\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,courier}
 \usepackage{color,graphicx,overpic}
 \usepackage{hyperref}
 
@@ -82,8 +82,21 @@
 \hspace{5pt} $\cdot$ Addition: O(n)\\
 \hspace{5pt} $\cdot$ Multiplication: O(n$^{2}$) {\it (naive)}\\
 \hspace{5pt} $\cdot$ Multiplication: O(nlogn) {\it (FFT)}\\
+\hspace{5pt} $\cdot$ Euclid's Rule: gcd(x, y) = gcd(x mod y, y)\\
 \hspace{5pt} $\cdot$ \# of bits in x$^{y}$ = ylog$_{2}$x $\leq$ 2$^{n}$ $\times$ n\\
 \hspace{5pt} $\cdot$ $\sum_{i=0}^{\infty}$ r$^{i}$ = $\frac{1}{1-r}$, if r $\textless$ 1\\
+\hspace{5pt} $\cdot$ $\sum_{i=0}^{n}$ i$^{2}$ = $\frac{n(n+1)(2n+1)}{6}$\\
+\hspace{5pt} $\cdot$ $\sum_{i=0}^{n}$ $\frac{1}{i}$ = O(log$_{2}$n)\\
+
+\subsubsection{Extended Euclid's GCD(x,y)}
+O(n$^{3}$); gcd(x,y) = d = x{\it i} + y{\it b}; x $\geq$ y; \# mod x\\
+ \texttt{ext-gcd(x,y):\\ if y == 0: return (x, 1, 0)\\ else:\\ \hspace{3pt} (d, a, b) = ext-gcd(y, x mod y)\\\hspace{3pt} return (d, b, a-$\frac{x}{y}\cdot b$)}
+ \includegraphics[scale=.45]{gcd.png}
+
+\subsubsection{Modular Exponentiation}
+x$^{y}$ mod N $\rightarrow$ start with repeated squaring mod N\\
+x mod N $\rightarrow$ x$^{2}$ mod N $\rightarrow$ (x$^{2}$)$^{^{2}}$ $\cdots$ x$^{log_{2}y}$ mod N\\
+each step takes O(log$^{2}N)$ times to compute and \\there are log$_{2}$y steps, $\therefore$ $\in$ O(n$^{3}$),\\ where n is the \# of bits in N
 
 \subsubsection{Formal Limit Proof}
 lim$_{n \rightarrow \infty}\frac{f(n)}{g(n)} :$ \\
@@ -109,6 +122,8 @@ T(n) = aT($\frac{n}{b}$) + O(n$^{d}$), if a $\textgreater0, b\textgreater 1, d \
             \end{cases}
 \]
 \end{flushleft}
+
+
 
 
 
