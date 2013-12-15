@@ -83,9 +83,9 @@
 \hspace{5pt} $\cdot$ Multiplication: O(n$^{2}$) {\it (naive)}\\
 \hspace{5pt} $\cdot$ Multiplication: O(nlogn) {\it (FFT)}\\
 \hspace{5pt} $\cdot$ Euclid's Rule: gcd(x, y) = gcd(x mod y, y)\\
-\hspace{5pt} $\cdot$ \# of bits in x$^{y}$ = ylog$_{2}$x $\leq$ 2$^{n}$ $\times$ n\\
-\hspace{5pt} $\cdot$ log(n!) $\geq$ c $\cdot$ nlog(n) {\scriptsize \it because} n! $\geq (\frac{n}{2})^{\frac{n}{2}}$\\
-\hspace{5pt} $\cdot$ {\it f:} S $\rightarrow$ T {\scriptsize is 1-to-1 (injective) \& onto (surjective) $\Rightarrow$ $\mid S \mid = \mid T \mid$}\\
+\hspace{5pt} $\cdot$ \# of bits in x$^{y}$ = ylog$_{2}$x $\leq$ n$\cdot$2$^{n}$ \\
+\vspace{1pt}\hspace{5pt} $\cdot$ $\frac{n}{2}^{\frac{n}{2}} \leq n! \leq n^{n}$\\
+\vspace{1pt}\hspace{5pt} $\cdot$ {\it f:} S $\rightarrow$ T {\scriptsize is 1-to-1 (injective) \& onto (surjective) $\Rightarrow$ $\mid S \mid = \mid T \mid$}\\
 \hspace{5pt} $\cdot$ {\it f:} S $\rightarrow$ T is 1-to-1 (injective) $\Rightarrow$ $\mid T \mid \geq \mid S \mid$\\
 \hspace{5pt} $\cdot$ $\sum_{i=0}^{\infty}$ r$^{i}$ = $\frac{1}{1-r}$, if r $\textless$ 1\\
 \hspace{5pt} $\cdot$ $\sum_{i=0}^{n}$ i$^{2}$ = $\frac{n(n+1)(2n+1)}{6}$\\
@@ -143,8 +143,16 @@ log$_{b}x^{p} = plog_{b}x$\\
 $\frac{ln(x)}{ln(m)}$ = log$_{m}$x\\
 x$^{log_{b}y} = y^{log_{b}x}$\\
 
-\subsubsection{Complexity Hierarchy}
-Exponential\\Polynomial\\Logarithmic\\Constant\\
+\subsubsection{Complexity}
+\hspace{3pt} $\cdot$ {\it f} $\in$ O({\it g}) if {\it f} $\leq$ c$\cdot${\it g}\\
+\hspace{3pt} $\cdot$ {\it f} $\in$ $\Omega$({\it g}) if {\it f} $\geq$ c$\cdot${\it g}\\
+\hspace{3pt} $\cdot$ {\it f} $\in$ $\Theta$({\it g}) if {\it f} $\in$ O({\it g}) \& $\Omega$({\it g})\\\vspace{1pt}
+{\scriptsize \textit{{\vspace{1pt}Hierarchy:}}\\
+\hspace{3pt} $\cdot$ Exponential\\
+\hspace{3pt} $\cdot$ Polynomial\\
+\hspace{3pt} $\cdot$ Logarithmic\\
+\hspace{3pt} $\cdot$ Constant}\\
+
 
 \subsubsection{Master's Theorem}
 T(n) = aT($\frac{n}{b}$) + O(n$^{d}$), if a $\textgreater0, b\textgreater 1, d \geq$ 0\\
@@ -159,6 +167,7 @@ T(n) = aT($\frac{n}{b}$) + O(n$^{d}$), if a $\textgreater0, b\textgreater 1, d \
 \end{flushleft}
 
 \subsubsection{Volker Strassen}
+{\scriptsize {\it faster matrix multiplication...}}\\
 \[
 X = 
 \begin{bmatrix}
@@ -175,9 +184,9 @@ X =
     AE+BG & AF+BH\\
     CE+DG & CF+DH\\
 \end{bmatrix}
-\in O(n^{3})
 \]
-with recurrence T(n)=8T($\frac{n}{2}$)+O(n$^{2}$) but thanks to Stassen... \\
+$\in$ O(n$^{3}$) with recurrence T(n)=8T($\frac{n}{2}$)+O(n$^{2}$)\\
+but thanks to Stassen... \\
 \[XY = 
 \begin{bmatrix}
     P_{5}+P_{4}-P_{2}+P_{6} & P_{1}+P_{2}\\
@@ -188,7 +197,49 @@ with recurrence T(n)=8T($\frac{n}{2}$)+O(n$^{2}$) but thanks to Stassen... \\
 P$_{5}$ = (A+D)(E+H) \hspace{3pt} P$_{6}$ = (B-D)(G+H) \hspace{3pt} P$_{7}$ = (A-C)(E+F)}\\\vspace{3pt}
 $\in$ O(n$^{log_{2}7}$) $\approx$ O(n$^{2.81}$) with recurrence T(n)=7T($\frac{n}{2}$)+O(n$^{2}$)\\
 
-\subsubsection
+\subsubsection{Polynomial Multiplication}
+{\it A(x) = a$_{0}+a_{1}x+\cdots+a_{d}x^{d}$ \hspace{3pt} B(x) = b$_{0}+b_{1}x+\cdots+b_{d}x^{d}$\\
+C(x)=A(x)$\times$B(x) = a$_{0}b_{k}+a_{1}b_{k-1}+\cdots+a_{k}b_{0} = \sum_{i=0}^{k} a_{i}b_{k-i}$} 
+
+\subsubsection{Fast Fourier Transform}
+complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $\omega^{2}, \omega^{3}, \cdots$\\
+\hspace{10pt} $\textless$ values $\textgreater$ = FFT($\textless$ coefficients $\textgreater$, $\omega$)\\
+\hspace{10pt} $\textless$ coefficients $\textgreater$ = $\frac{1}{n}$ FFT($\textless$ values $\textgreater$, $\omega^{-1}$) $\in$ O(nlogn)\\
+\vspace{2pt}Vandermonde Matrix, M$_{n}(\omega)$= \hspace{3pt} 
+\[{\scriptsize
+\begin{bmatrix}
+    1 & 1 & 1 & \cdots & 1 \\
+    1 & \omega & \omega^{2} & \cdots & \omega^{n-1}\\
+    1 & \omega^{2} & \omega^{4} & \cdots & \omega^{2(n-1)}\\
+    1 & \cdots & \cdots & \ddots & \omega^{j(n-1)}\\
+    1 & \omega^{n-1} & \omega^{2(n-1)} & \cdots & \omega^{(n-1)(n-1)}\\
+\end{bmatrix}
+{\tiny where \ (j,k)^{th} \ entry \ is \ \omega^{jk}}
+}\]
+
+\subsubsection{Graphs}
+{\scriptsize \hspace{5pt} $\cdot$ \textit{\textbf{graph}}} -- set of nodes \& edges between select nodes\\
+{\scriptsize \hspace{5pt} $\cdot$ \textit{\textbf{tree}}} -- a connected graph with no cycles\\
+{\scriptsize \hspace{5pt} $\cdot$ \textit{\textbf{back edge}}} -- edge leading back to previously visited node\\
+{\scriptsize \hspace{5pt} $\cdot$ \textit{\textbf{graph}}} -- set of nodes \& edges between select nodes\\
+
+
+
+
+
+\subsubsection{Depth First Search}
+{\scriptsize {\it discovers what nodes are reachable from a vertex $\in$ O($\mid$V$\mid$+$\mid$E$\mid$)}}\\
+ \texttt{\textbf{explore}(G, v):\\
+ \hspace{3pt} v.visit = true\\
+ \hspace{3pt} previsit(v)\\
+ \hspace{3pt} for each edge (v, u) in E:\\
+ \hspace{9pt} if u.visit = false: explore(G, u)\\
+ \hspace{3pt} postvisit(v)}\\
+ 
+ \texttt{\textbf{dfs}(G):\\
+ \hspace{3pt} for all v $\in$ V: v.visit = false\\
+  \hspace{3pt} for all v $\in$ V: if v.visit = false: explore(G,v)}
+  
 
 % You can even have references
 \rule{0.3\linewidth}{0.25pt}
