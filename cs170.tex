@@ -84,6 +84,9 @@
 \hspace{5pt} $\cdot$ Multiplication: O(nlogn) {\it (FFT)}\\
 \hspace{5pt} $\cdot$ Euclid's Rule: gcd(x, y) = gcd(x mod y, y)\\
 \hspace{5pt} $\cdot$ \# of bits in x$^{y}$ = ylog$_{2}$x $\leq$ 2$^{n}$ $\times$ n\\
+\hspace{5pt} $\cdot$ log(n!) $\geq$ c $\cdot$ nlog(n) {\scriptsize \it because} n! $\geq (\frac{n}{2})^{\frac{n}{2}}$\\
+\hspace{5pt} $\cdot$ {\it f:} S $\rightarrow$ T {\scriptsize is 1-to-1 (injective) \& onto (surjective) $\Rightarrow$ $\mid S \mid = \mid T \mid$}\\
+\hspace{5pt} $\cdot$ {\it f:} S $\rightarrow$ T is 1-to-1 (injective) $\Rightarrow$ $\mid T \mid \geq \mid S \mid$\\
 \hspace{5pt} $\cdot$ $\sum_{i=0}^{\infty}$ r$^{i}$ = $\frac{1}{1-r}$, if r $\textless$ 1\\
 \hspace{5pt} $\cdot$ $\sum_{i=0}^{n}$ i$^{2}$ = $\frac{n(n+1)(2n+1)}{6}$\\
 \hspace{5pt} $\cdot$ $\sum_{i=0}^{n}$ $\frac{1}{i}$ = O(log$_{2}$n)\\
@@ -104,16 +107,37 @@ Multiply all congruences together and we find
 a$\cdot$2a$\cdot$3a$\cdots$(p-1)$\cdot$a = 1$\cdot$2$\cdot$3$\cdots$(p-1) (mod p)
 or better, a$^{(p-1)}$(p-1)! = (p-1)! mod p. Divide both side by (p-1)! $\blacksquare$}\\
 
+\subsubsection{Primality Testing}
+\begin{flushleft}\vspace{-16pt}\[
+\hspace{-50pt}any \ a  \rightarrow a^{N-1} = 1 \ mod \ N {\it ?}
+\begin{cases}
+	{\it yes} \Rightarrow {\it "prime"}\\
+	{\it no} \Rightarrow {\it composite}
+\end{cases}
+\]
+\end{flushleft}
+\vspace{-10pt}if N is not prime a$^{N-1}$ = 1 mod N $\leq$ half values of a $\textless$ N
+
+\subsubsection{Lagrange's Prime Theorem}
+Let $\pi$(x) be the \# of primes $leq$ x, then\\
+$\pi$(x) $\approx$ $\frac{x}{ln(x)}$, or more precisely lim$_{x \rightarrow \infty} \frac{\pi(x)}{(\frac{x}{ln(x)})} = 1$\\
+
 \subsubsection{Modular Exponentiation}
 x$^{y}$ mod N $\rightarrow$ start with repeated squaring mod N\\
 x mod N $\rightarrow$ x$^{2}$ mod N $\rightarrow$ (x$^{2}$)$^{^{2}}$ $\cdots$ x$^{log_{2}y}$ mod N\\
 each step takes O(log$^{2}N)$ times to compute and \\there are log$_{2}$y steps, $\therefore$ $\in$ O(n$^{3}$),\\ where n is the \# of bits in N
 
 \subsubsection{Formal Limit Proof}
-lim$_{n \rightarrow \infty}\frac{f(n)}{g(n)} :$ \\
-\hspace{3pt} $\geq$ 0 {\it $(\infty)$} $\Rightarrow$ f(n) $\in$  $\Omega(g(n))$\\
-\hspace{3pt} $\textless$ $\infty$ {\it $(0)$} $\Rightarrow$ f(n) $\in$  O(g(n))\\
-\hspace{3pt} = c$_{_{\mid 0 \textless c \textless \infty}}$ $\Rightarrow$ f(n) $\in$  $\Theta(g(n))$\\
+\begin{flushleft}\vspace{-16pt}\[
+\hspace{-50pt}lim_{n \rightarrow \infty}\frac{f(n)}{g(n)}
+\begin{cases}
+\hspace{3pt} \geq \ 0 \ {\it (\infty)} \Rightarrow \ f(n) \ \in \ \Omega(g(n))\\
+\hspace{3pt} \textless \ \infty \ {\it (0)} \Rightarrow \ f(n) \ \in \ O(g(n))\\
+\hspace{3pt} = c_{_{\mid 0 \textless c \textless \infty}} \Rightarrow \ f(n) \ \in \ \Theta(g(n))\\
+\end{cases}
+\]
+\end{flushleft}
+
 \subsubsection{Logarithm Tricks}
 log$_{b}x^{p} = plog_{b}x$\\
 $\frac{ln(x)}{ln(m)}$ = log$_{m}$x\\
@@ -134,9 +158,37 @@ T(n) = aT($\frac{n}{b}$) + O(n$^{d}$), if a $\textgreater0, b\textgreater 1, d \
 \]
 \end{flushleft}
 
+\subsubsection{Volker Strassen}
+\[
+X = 
+\begin{bmatrix}
+    A & B\\
+    C & D\\
+\end{bmatrix}
+\hspace{3pt} \times \hspace{3pt} Y = 
+\begin{bmatrix}
+    E & F\\
+    G & H\\
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    AE+BG & AF+BH\\
+    CE+DG & CF+DH\\
+\end{bmatrix}
+\in O(n^{3})
+\]
+with recurrence T(n)=8T($\frac{n}{2}$)+O(n$^{2}$) but thanks to Stassen... \\
+\[XY = 
+\begin{bmatrix}
+    P_{5}+P_{4}-P_{2}+P_{6} & P_{1}+P_{2}\\
+    P_{3}+P_{4} & P_{1}+P_{5}-P_{3}+P_{7}\\
+\end{bmatrix}
+\]
+{\scriptsize P$_{1}$ = A(F-H) \hspace{3pt} P$_{2}$ = (A+B)H \hspace{3pt} P$_{3}$ = (C+D)E \hspace{3pt} P$_{4}$ = D(G-E) \\
+P$_{5}$ = (A+D)(E+H) \hspace{3pt} P$_{6}$ = (B-D)(G+H) \hspace{3pt} P$_{7}$ = (A-C)(E+F)}\\\vspace{3pt}
+$\in$ O(n$^{log_{2}7}$) $\approx$ O(n$^{2.81}$) with recurrence T(n)=7T($\frac{n}{2}$)+O(n$^{2}$)\\
 
-
-
+\subsubsection
 
 % You can even have references
 \rule{0.3\linewidth}{0.25pt}
