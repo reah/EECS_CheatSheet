@@ -218,12 +218,24 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
 }\]
 
 \subsubsection{Graphs}
-{\scriptsize \hspace{5pt} $\cdot$ \textit{\textbf{graph}}} -- set of nodes \& edges between select nodes\\
-{\scriptsize \hspace{5pt} $\cdot$ \textit{\textbf{tree}}} -- a connected graph with no cycles\\
-{\scriptsize \hspace{5pt} $\cdot$ \textit{\textbf{back edge}}} -- edge leading back to previously visited node\\
-{\scriptsize \hspace{5pt} $\cdot$ \textit{\textbf{graph}}} -- set of nodes \& edges between select nodes\\
-
-
+{\scriptsize\hspace{5pt} $\cdot$ \textit{\textbf{graph}} -- set of nodes \& edges between select nodes\\
+\hspace{5pt} $\cdot$ \textit{\textbf{tree}} -- a connected graph with no cycles\\
+\hspace{5pt} $\cdot$ \textit{\textbf{tree edge}} -- part of DFS forest\\
+\hspace{5pt} $\cdot$ \textit{\textbf{forward edge}} -- edge leading from node $\rightarrow$ non-child descendant\\
+\hspace{5pt} $\cdot$ \textit{\textbf{back edge}} -- edge leading back to previously visited node\\
+\hspace{5pt} $\cdot$ \textit{\textbf{cross edge}} -- edge leading to neither descendant nor ancestor\\
+{\it given an edge (u,v):}\\
+\hspace{5pt} $\cdot$ \textit{\textbf{tree/forward edge}}: {\it pre(u) $\textless$ pre(v) $\textless$ post(v) $\textless$ post(u)} \\
+\hspace{5pt} $\cdot$ \textit{\textbf{back edge}}: {\it pre(v) $\textless$ pre(u) $\textless$ post(u) $\textless$ post(v)} \\
+\hspace{5pt} $\cdot$ \textit{\textbf{cross edge}}: {\it pre(v) $\textless$ post(v) $\textless$ pre(u) $\textless$ post(u)}\\
+{\it properties:}\\
+\hspace{5pt} $\cdot$ a directed graph has a cycle iff its DFS reveals a back edge\\
+\hspace{5pt} $\cdot$ every directed graph is a DAG of its SCCs\\
+\hspace{5pt} $\cdot$ if explore starts at u, it will terminate when all nodes \\\hspace{10pt}reachable from u have been visited\\
+\hspace{5pt} $\cdot$ node receives highest post order in DFS must lie in source SCC\\
+\hspace{5pt} $\cdot$ if C \& C$^{'}$ are SCCs \& $\exists$ an edge from a node in C $\rightarrow$ C$^{'}$ $\Rightarrow$ \\\hspace{12pt}highest post order number in C $\textgreater$ than C$^{'}$'s highest post \#\\
+{\it linearize (topologically sort from earliest $\rightarrow$ latest)}
+}
 
 
 
