@@ -83,6 +83,33 @@
 \hspace{5pt} $\cdot$ Multiplication: O(n$^{2}$) {\it (naive)}\\
 \hspace{5pt} $\cdot$ Multiplication: O(nlogn) {\it (FFT)}\\
 \hspace{5pt} $\cdot$ \# of bits in x$^{y}$ = ylog$_{2}$x $\leq$ 2$^{n}$ $\times$ n\\
+\hspace{5pt} $\cdot$ $\sum_{i=0}^{\infty}$ r$^{i}$ = $\frac{1}{1-r}$, if r $\textless$ 1\\
+
+\subsubsection{Formal Limit Proof}
+lim$_{n \rightarrow \infty}\frac{f(n)}{g(n)} :$ \\
+\hspace{3pt} $\geq$ 0 {\it $(\infty)$} $\Rightarrow$ f(n) $\in$  $\Omega(g(n))$\\
+\hspace{3pt} $\textless$ $\infty$ {\it $(0)$} $\Rightarrow$ f(n) $\in$  O(g(n))\\
+\hspace{3pt} = c$_{_{\mid 0 \textless c \textless \infty}}$ $\Rightarrow$ f(n) $\in$  $\Theta(g(n))$\\
+\subsubsection{Logarithm Tricks}
+log$_{b}x^{p} = plog_{b}x$\\
+$\frac{ln(x)}{ln(m)}$ = log$_{m}$x\\
+x$^{log_{b}y} = y^{log_{b}x}$\\
+
+\subsubsection{Complexity Hierarchy}
+Exponential\\Polynomial\\Logarithmic\\Constant\\
+
+\subsubsection{Master's Theorem}
+T(n) = aT($\frac{n}{b}$) + O(n$^{d}$), if a $\textgreater0, b\textgreater 1, d \geq$ 0\\
+\begin{flushleft}\vspace{-16pt}
+\[
+\hspace{-100pt}T(n)=\begin{cases}
+	O(n^{d})$ if d $\textgreater$ log$_{b}a\\
+	O(n^{d}log_{b}n)$ if d = log$_{b}a\\
+	O(n^{log_{b}n})$ if d $\textless$ log$_{b}a\\
+            \end{cases}
+\]
+\end{flushleft}
+
 
 
 % You can even have references
