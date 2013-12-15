@@ -93,7 +93,11 @@
 
 \subsubsection{Extended Euclid's GCD(x,y)}
 O(n$^{3}$); gcd(x,y) = d = x{\it i} + y{\it b}; x $\geq$ y; \# mod x\\
- \texttt{ext-gcd(x,y):\\ if y == 0: return (x, 1, 0)\\ else:\\ \hspace{3pt} (d, a, b) = ext-gcd(y, x mod y)\\\hspace{3pt} return (d, b, a-$\frac{x}{y}\cdot b$)}
+ \texttt{\textbf{ext-gcd}(x,y):\\ 
+ \hspace{3pt} if y == 0: return (x, 1, 0)\\ 
+ \hspace{3pt} else:\\ 
+ \hspace{10pt} (d, a, b) = ext-gcd(y, x mod y)\\
+ \hspace{10pt} return (d, b, a-$\frac{x}{y}\cdot b$)}
  \includegraphics[scale=.45]{gcd.png}
  
  \subsubsection{Fermat's Little Theorem}
@@ -235,6 +239,7 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
 \hspace{5pt} $\cdot$ in a DAG, every edge leads to a vertex with lower post \#\\
 \hspace{5pt} $\cdot$ every directed graph is a DAG of its SCCs\\
 \hspace{5pt} $\cdot$ acyclic, linearizability, \& absence of back edges are all the same \\\hspace{12pt}property\\
+\hspace{5pt} $\cdot$ any path of DAG, vertices appear in increasing linearized order\\\hspace{10pt}(linearize, topological sort DAG by DFS, then visit vertices in \\\hspace{10pt}sorted order, updating edges out of each)\\
 \hspace{5pt} $\cdot$ if explore starts at u, it will terminate when all nodes \\\hspace{10pt}reachable from u have been visited\\
 \hspace{5pt} $\cdot$ node receives highest post order in DFS must lie in source SCC\\
 \hspace{5pt} $\cdot$ if C \& C$^{'}$ are SCCs \& $\exists$ an edge from a node in C $\rightarrow$ C$^{'}$ $\Rightarrow$ \\\hspace{12pt}highest post order number in C $\textgreater$ than C$^{'}$'s highest post \#\\
@@ -273,7 +278,7 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
 \hspace{27pt} dist(v) = dist(u) + 1}
 
 \subsubsection{Dijkstra's Algorithm}
-{\scriptsize {\it shortest path algorithm $\in$ O(($\mid$V$\mid$+$\mid$E$\mid$)log$\mid$V$\mid$)\\}}
+{\scriptsize {\it shortest path algorithm (+ edge weights) $\in$ O(($\mid$V$\mid$+$\mid$E$\mid$)log$\mid$V$\mid$)\\}}
 \texttt{\textbf{dijkstra}(G, l, s):\\
 \hspace{3pt} for all u $\in$ V: \\
 \hspace{10pt} dist(u) = $\infty$\\
@@ -288,6 +293,22 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
 \hspace{23pt} prev(v) = u\\
 \hspace{23pt} decreasekey(H,v)}
 \includegraphics[scale=.2]{heaps.png}
+
+\subsubsection{Bellman-Ford Algorithm}
+{\scriptsize {\it shortest path algorithm (+/- edge weights) $\in$ O(($\mid$V$\mid$+$\mid$E$\mid$)log$\mid$V$\mid$)\\}}
+\texttt{\textbf{bellman\_ford}(G, l, s):\\
+\hspace{3pt} for all u $\in$ V: \\
+\hspace{10pt} dist(u) = $\infty$\\
+\hspace{10pt} prev(u) = nil\\
+\hspace{3pt} dist(s) = 0\\
+\hspace{3pt} repeat $\mid$V$\mid$ - 1 times:\\
+\hspace{10pt} for all e $\in$ E:\\
+\hspace{20pt} update(e)\\
+\textbf{update}(u,v):\\
+\hspace{3pt} min\{dist(v), dist(u) + l(u,v)\}\\
+{\it note negative cycle exists if any edge distance value is reduced on $\mid$V$\mid^{th}$ iteration}}
+
+
 
 
 
