@@ -229,11 +229,13 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
 \hspace{5pt} $\cdot$ \textit{\textbf{forward edge}} -- edge leading from node $\rightarrow$ non-child descendant\\
 \hspace{5pt} $\cdot$ \textit{\textbf{back edge}} -- edge leading back to previously visited node\\
 \hspace{5pt} $\cdot$ \textit{\textbf{cross edge}} -- edge leading to neither descendant nor ancestor\\
-{\it given an edge (u,v):}\\
+{\it Given an Edge (u,v):}\\
 \hspace{5pt} $\cdot$ \textit{\textbf{tree/forward edge}}: {\it pre(u) $\textless$ pre(v) $\textless$ post(v) $\textless$ post(u)} \\
 \hspace{5pt} $\cdot$ \textit{\textbf{back edge}}: {\it pre(v) $\textless$ pre(u) $\textless$ post(u) $\textless$ post(v)} \\
 \hspace{5pt} $\cdot$ \textit{\textbf{cross edge}}: {\it pre(v) $\textless$ post(v) $\textless$ pre(u) $\textless$ post(u)}\\
-{\it properties:}\\
+{\it Properties:}\\
+\hspace{5pt} $\cdot$ a tree on n nodes has n-1 edges\\
+\hspace{5pt} $\cdot$ any connected undirected graph with $\mid$E$\mid$ = $\mid$V$\mid$-1 edges is a tree\\
 \hspace{5pt} $\cdot$ a directed graph has a cycle iff its DFS reveals a back edge\\
 \hspace{5pt} $\cdot$ every DAG has at least 1 source \& 1 sink\\
 \hspace{5pt} $\cdot$ in a DAG, every edge leads to a vertex with lower post \#\\
@@ -244,12 +246,15 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
 \hspace{5pt} $\cdot$ node receives highest post order in DFS must lie in source SCC\\
 \hspace{5pt} $\cdot$ if C \& C$^{'}$ are SCCs \& $\exists$ an edge from a node in C $\rightarrow$ C$^{'}$ $\Rightarrow$ \\\hspace{12pt}highest post order number in C $\textgreater$ than C$^{'}$'s highest post \#\\
 \hspace{5pt} $\cdot$ min edges to make graph strongly connected with n-sinks \& \\\hspace{12pt}m-sources$\rightarrow${\it max(n,m)}\\
-{\it linearize (topologically sort from earliest $\rightarrow$ latest)}\\
+{\it Linearize (topologically sort from earliest $\rightarrow$ latest)}\\
 \hspace{5pt} $\cdot$ perform tasks in decreasing order of their post numbers (DFS)\\
 \hspace{5pt} $\cdot$ or find a source, output it, delete it, repeat until empty\\
 {\it Algorithm to Decompose G into SSCs}\\
 {\addtolength{\leftskip}{4mm}
-\texttt{Run DFS on G$^{R}$, then run DFS on G, every node it reaches is in that SCC, pick next vertex to run DFS from in order of decreasing post \#s discovered from DFS ordering on G$^{R}$}\\}}
+\texttt{Run DFS on G$^{R}$, then run DFS on G, every node it reaches is in that SCC, pick next vertex to run DFS from in order of decreasing post \#s discovered from DFS ordering on G$^{R}$}\\}
+{\it Shortest/Longest path in a DAG}\\
+{\addtolength{\leftskip}{4mm}
+\texttt{Linearize DAG by DFS, visit vertices in sorted order, updating edges out of each. Note for longest paths, just negate all edge lengths.}\\}}
 
 \subsubsection{Depth First Search}
 {\scriptsize {\it discovers what nodes are reachable from a vertex $\in$ O($\mid$V$\mid$+$\mid$E$\mid$)}}\\
@@ -295,7 +300,7 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
 \includegraphics[scale=.2]{heaps.png}
 
 \subsubsection{Bellman-Ford Algorithm}
-{\scriptsize {\it shortest path algorithm (+/- edge weights) $\in$ O(($\mid$V$\mid$+$\mid$E$\mid$)log$\mid$V$\mid$)\\}}
+{\scriptsize {\it shortest path algorithm (+/- edge weights) $\in$ O(($\mid$V$\mid$$\cdot$$\mid$E$\mid$)\\}}
 \texttt{\textbf{bellman\_ford}(G, l, s):\\
 \hspace{3pt} for all u $\in$ V: \\
 \hspace{10pt} dist(u) = $\infty$\\
@@ -306,9 +311,13 @@ complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $
 \hspace{20pt} update(e)\\
 \textbf{update}(u,v):\\
 \hspace{3pt} min\{dist(v), dist(u) + l(u,v)\}\\
-{\it note negative cycle exists if any edge distance value is reduced on $\mid$V$\mid^{th}$ iteration}}
+{\it note: negative cycle exists if any edge distance value is reduced on $\mid$V$\mid^{th}$ iteration}}
 
+\subsubsection{Kruskal's Minimum Spanning Tree Algorithm}
+{\scriptsize {\it starts with an empty graph \& selects edges from E repeatedly with lightest weight that does not produce a cycle $\in$ O($\mid$E$\mid$log$\mid$V$\mid$). Uses disjoint sets to determine whether a cycle exists in amortized constant time (see disjoint set data structure).}}
 
+\subsubsection{Cut Property}
+Suppose edges X are part of a minimum spanning tree 
 
 
 
