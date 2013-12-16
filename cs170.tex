@@ -20,7 +20,7 @@
 % if using A4 paper. (This probably isn't strictly necessary.)
 % If using another size paper, use default 1cm margins.
 \ifthenelse{\lengthtest { \paperwidth = 11in}}
-    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    { \geometry{top=.25in,left=.25in,right=.25in,bottom=.25in} }
     {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
         {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
         {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
@@ -209,18 +209,27 @@ C(x)=A(x)$\times$B(x) = a$_{0}b_{k}+a_{1}b_{k-1}+\cdots+a_{k}b_{0} = \sum_{i=0}^
 complex n$^{th}$ roots of unity are given by $\omega = e^{\frac{2\pi i }{n}}$, $\omega^{2}, \omega^{3}, \cdots$\\
 \hspace{10pt} $\textless$ values $\textgreater$ = FFT($\textless$ coefficients $\textgreater$, $\omega$)\\
 \hspace{10pt} $\textless$ coefficients $\textgreater$ = $\frac{1}{n}$ FFT($\textless$ values $\textgreater$, $\omega^{-1}$) $\in$ O(nlogn)\\
-\vspace{2pt}Vandermonde Matrix, M$_{n}(\omega)$= \hspace{3pt} 
-\[{\scriptsize
-\begin{bmatrix}
-    1 & 1 & 1 & \cdots & 1 \\
-    1 & \omega & \omega^{2} & \cdots & \omega^{n-1}\\
-    1 & \omega^{2} & \omega^{4} & \cdots & \omega^{2(n-1)}\\
-    1 & \cdots & \cdots & \ddots & \omega^{j(n-1)}\\
-    1 & \omega^{n-1} & \omega^{2(n-1)} & \cdots & \omega^{(n-1)(n-1)}\\
-\end{bmatrix}
-{\it where (j,k)^{th} entry \ is \ \omega^{jk}}
-}\]
-
+\vspace{2pt}Vandermonde Matrix, %M$_{n}(\omega)$= \hspace{3pt} 
+%\[{\scriptsize
+%\begin{bmatrix}
+%    1 & 1 & 1 & \cdots & 1 \\
+%    1 & \omega & \omega^{2} & \cdots & \omega^{n-1}\\
+%    1 & \omega^{2} & \omega^{4} & \cdots & \omega^{2(n-1)}\\
+%    1 & \cdots & \cdots & \ddots & \omega^{j(n-1)}\\
+%    1 & \omega^{n-1} & \omega^{2(n-1)} & \cdots & \omega^{(n-1)(n-1)}\\
+%\end{bmatrix}
+%{\it where (j,k)^{th} entry \ is \ \omega^{jk}}
+%}\]
+\[{\scriptsize M_{n}(\omega) =
+    \begin{bmatrix}
+        1 & 1 & 1 & \cdots & 1\\
+        1 & \omega & \omega^{2} & \cdots & \omega^{n-1}\\
+        1 & \omega^{2} & \omega^{4} & \cdots & \omega^{2(n-1)}\\
+        \vdots & \vdots & \vdots & \ddots & \vdots\\
+        1 & \omega^{j} & \omega^{2j} & \cdots & \omega^{(n-1)j}\\
+        \vdots & \vdots & \vdots & \ddots & \vdots\\
+        1 & \omega^{(n-1)} & \omega^{2(n-1)} & \cdots & \omega^{(n-1)(n-1)}
+\end{bmatrix}}\]
 
 \subsubsection{Graphs}
 {\scriptsize\hspace{5pt} $\cdot$ \textit{\textbf{graph}} -- set of nodes \& edges between select nodes\\
@@ -339,6 +348,47 @@ Repeat until all vertices are in tree.}}
 \texttt{cost of tree = $\sum_{i=1}^{n}f_{i}\cdot$(depth of ith symbol in tree)}\\
 or \texttt{cost of tree = sum of frequencies of all leaves and internal nodes except root.}\\
 Construct tree greedily: \texttt{Start with two symbols with smallest frequencies, continue branching upward constructing tree with next two smallest frequencies (consider sums also) until there are none left.}}
+
+\subsubsection{Horn Formulas}
+{\scriptsize \hspace{5pt} $\cdot$ \textit{\textbf{literal}} -- x or, its negation, $\neg$x\\
+\hspace{5pt} $\cdot$ \textit{\textbf{clause types}}: \\\hspace{20pt} $\cdot$ \textit{\textbf{Implication:} left side is AND of \# positive literals \& \\\hspace{25pt}right side is a single positive literal {\textbf         (z $\wedge$ w) $\Rightarrow$ u}\\\hspace{20pt} $\cdot$ \textbf{Pure Negative Clause:} consist of OR of \# of negative \\\hspace{25pt}literals} ($\bar{u} \vee \bar{v} \vee \bar{y}$)\\
+Horn's Formula: \texttt{Set all variables to false. While there is an implication that isn't satisfied: set right-hand variable of implication to true. If all pure negative clauses are satisfied: return the assignment. else return not satisfiable.}}
+
+\subsubsection{Set Cover}
+{\scriptsize {\it Choose a selection of sets whose union is B\\} \texttt{Pick set S$_{i}$ with largest number of uncovered elements. Repeat until all elements in B are covered.\\}{\it Note: if B contains n elements and optimal cover consists of k sets, then greedy algorithm will use at most k$\cdot$ln(n) sets.}}
+
+\subsubsection{Dynamic Programming}
+{\scriptsize {\bf Longest Increasing Subsequence:} O(n$^{2}$)\\
+The following algorithm starts at one side of the list and finds the max length of sequences terminating at that given node, recursively following backlinks. Then given all the lengths of paths terminating at that given node choose the max length. Without memoization, this solution would be exponential time.\vspace{-10pt}
+\begin{verbatim}
+L = {}
+for j=1,2,...,n:
+    L[j] = 1+max{L[i]:(i,j) in E}
+    # The (i,j) represents all the edges that go from
+    # node i to node j.
+return max(L)
+\end{verbatim}}
+
+{\scriptsize {\bf Edit Distance (Spelling Suggestions):} O(nm)\\
+This algorithm works by choosing the min of the options for every combination of letters/empty spaces.\vspace{-10pt}
+\begin{verbatim}
+S _ N O W Y
+S U N N _ Y
+\end{verbatim}\vspace{-20pt}
+\begin{verbatim}
+for i = 0,1,2,...,m:
+    E(i,0) = i
+for j = 1,2,...,n:
+    E(0,j) = j
+for i = 1,2,...,m:
+    for j = 1,2,...,n:
+        E(i,j) = min{E(i-1,j)+1,E(i,j-1)+1,
+        E(i-1,j-1) +diff(i,j)}
+return E(m,n)
+\end{verbatim}}
+
+
+
 
 
 % You can even have references
